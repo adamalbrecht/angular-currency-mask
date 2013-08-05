@@ -1,0 +1,20 @@
+<html>
+  <body>
+    <div ng-app="demo">
+      <input ng-model='amount' type='text' currency-mask />
+      <br>
+      <br>
+      <strong>Unformatted Amount:</strong>
+      {{amount}}
+      <br>
+      <br>
+      <strong>Currency Filtered Amount:</strong>
+      {{amount | currency}}
+    </div>
+    <script src='http://code.angularjs.org/1.1.5/angular.min.js'></script>
+    <script src='angular-currency-mask.js'></script>
+    <script>
+      var app = angular.module('demo', ['currencyMask']);
+    </script>
+  </body>
+</html>
