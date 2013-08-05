@@ -23,7 +23,13 @@ angular.module('currencyMask', []).directive('currencyMask', function () {
 
       var toDecimal = function(x) {
         if (!x) { return null; }
-        return parseFloat(x.replace(/[^0-9\.]/g, ""));
+        x = x.replace(/[^0-9\.]/g, "");
+        parts = x.split(".");
+        if (parts.length > 1) {
+          parts[1] = parts[1].substring(0,2);
+        }
+        x = parts.join('.');
+        return parseFloat(x);
       }
 
       controller.$render = function() {
@@ -40,8 +46,16 @@ angular.module('currencyMask', []).directive('currencyMask', function () {
       };
 
       // Run formatting on keyup
-      element.bind('keyup', function() {
-        runUpdates(false);
+      element.bind('keyup', function(e) {
+        var keycode = e.keyCode;
+        var isTextInputKey = 
+          (keycode > 47 && keycode < 58)   || // number keys
+          keycode == 32 || keycode == 8    || // spacebar or backspace
+          (keycode > 64 && keycode < 91)   || // letter keys
+          (keycode > 95 && keycode < 112)  || // numpad keys
+          (keycode > 185 && keycode < 193) || // ;=,-./` (in order)
+          (keycode > 218 && keycode < 223);   // [\]' (in order)
+        if (isTextInputKey) { runUpdates(false); }
       });
       // Add extra decimals if needed on blur
       element.bind('blur', function() {
