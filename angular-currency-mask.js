@@ -4,13 +4,18 @@ angular.module('currencyMask', []).directive('currencyMask', function () {
     require: 'ngModel',
     link: function (scope, element, attrs, ngModelController) {
       // Run formatting on keyup
-      var numberWithCommas = function(value) {
+      var numberWithCommas = function(value, addExtraZero) {
+        if (addExtraZero == undefined)
+          addExtraZero = false
         value = value.toString();
         value = value.replace(/[^0-9\.]/g, "");
         var parts = value.split('.');
         parts[0] = parts[0].replace(/\d{1,3}(?=(\d{3})+(?!\d))/g, "$&,");
         if (parts[1] && parts[1].length > 2) {
           parts[1] = parts[1].substring(0, 2);
+        }
+        if (addExtraZero && parts[1] && (parts[1].length === 1)) {
+          parts[1] = parts[1] + "0" 
         }
         return parts.join(".");
       };
@@ -49,7 +54,7 @@ angular.module('currencyMask', []).directive('currencyMask', function () {
         if (!value || value.length == 0) {
           return value;
         }
-        value = numberWithCommas(value);
+        value = numberWithCommas(value, true);
         return value;
       });
     }
