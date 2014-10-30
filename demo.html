@@ -1,6 +1,11 @@
 <html>
   <body>
-    <div ng-app="demo" ng-init="amount=1234567">
+    <div ng-app="demo" ng-controller="demoCtrl">
+      <select ng-model="language" ng-options="language for language in languages" ng-change="changeLanguage(language)">
+      	<option value="">--</option>
+      </select>
+      <br>
+      <br>
       <input ng-model='amount' type='text' currency-mask />
       <br>
       <br>
@@ -11,10 +16,24 @@
       <strong>Currency Filtered Amount:</strong>
       {{amount | currency}}
     </div>
-    <script src='http://code.angularjs.org/1.1.5/angular.min.js'></script>
+    <script src='bower_components/angular/angular.min.js'></script>
+    <script src='bower_components/angular-tmh-dynamic-locale/tmhDynamicLocale.min.js'></script>
     <script src='angular-currency-mask.js'></script>
     <script>
-      var app = angular.module('demo', ['currencyMask']);
+      var app = angular.module('demo', ['currencyMask', 'tmh.dynamicLocale']);
+      
+      app.config(function(tmhDynamicLocaleProvider) {
+         tmhDynamicLocaleProvider.localeLocationPattern('bower_components/angular-i18n/angular-locale_{{locale}}.js');
+      });
+
+      app.controller('demoCtrl', function($scope, tmhDynamicLocale) {
+       	 $scope.changeLanguage = function(key) {
+            tmhDynamicLocale.set(key);
+	        $scope.amount = 123456.78;
+         };
+
+         $scope.languages = ['en', 'es', 'fr', 'pt-br']; 
+      });
     </script>
   </body>
 </html>
