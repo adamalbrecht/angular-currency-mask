@@ -8,7 +8,9 @@
     "README.md"
   ],
   "dependencies": {
-    "angular": ">=1.0.8"
+    "angular": "1.0.8"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "angular-i18n": "1.0.8"
+  }
 }

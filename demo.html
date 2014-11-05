@@ -1,6 +1,6 @@
 <html>
   <body>
-    <div ng-app="demo" ng-init="amount=1234567">
+    <div ng-app="demo" ng-controller="demoCtrl">
       <input ng-model='amount' type='text' currency-mask />
       <br>
       <br>
@@ -11,10 +11,19 @@
       <strong>Currency Filtered Amount:</strong>
       {{amount | currency}}
     </div>
-    <script src='http://code.angularjs.org/1.1.5/angular.min.js'></script>
-    <script src='angular-currency-mask.js'></script>
+    
+    <script src="bower_components/angular/angular.min.js"></script>
+    <script src="bower_components/angular-i18n/angular-locale_en.js"></script>
+<!--     <script src="bower_components/angular-i18n/angular-locale_pt-br.js"></script> -->
+<!--     <script src="bower_components/angular-i18n/angular-locale_fr.js"></script> -->
+<!--     <script src="bower_components/angular-i18n/angular-locale_es.js"></script> -->
+    <script src="angular-currency-mask.js"></script>
     <script>
       var app = angular.module('demo', ['currencyMask']);
+
+      app.controller('demoCtrl', function($scope) {
+         $scope.amount = 123456.78;
+      });
     </script>
   </body>
 </html>
