@@ -8,7 +8,7 @@ angular.module('currencyMask', []).directive('currencyMask', function () {
         if (addExtraZero == undefined)
           addExtraZero = false
         value = value.toString();
-        value = value.replace(/[^0-9\.]/g, "");
+        value = value.replace(/[^\-0-9\.]/g, "");
         var parts = value.split('.');
         parts[0] = parts[0].replace(/\d{1,3}(?=(\d{3})+(?!\d))/g, "$&,");
         if (parts[1] && parts[1].length > 2) {
@@ -47,7 +47,7 @@ angular.module('currencyMask', []).directive('currencyMask', function () {
           return value;
         }
         value = value.toString();
-        value = value.replace(/[^0-9\.]/g, "");
+        value = value.replace(/[^\-0-9\.]/g, "");
         return value;
       });
       ngModelController.$formatters.push(function(value) {
